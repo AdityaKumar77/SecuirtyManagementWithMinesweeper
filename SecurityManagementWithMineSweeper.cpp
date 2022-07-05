@@ -14,6 +14,17 @@ int SIDE;  // side length of the board
 int MINES; // number of mines on the board
 // A Utility Function to check whether given cell (row, col)
 // is a valid cell or not
+unsigned long long Hash(string &data)
+{
+    unsigned long long result = 0;
+    const unsigned long long res = data.size() + 1;
+    for (unsigned int ch : data)
+    {
+        srand(res * ch);
+        result = 69190469 + rand() * 169;
+    }
+    return result;
+}
 bool isValid(int row, int col)
 {
     // Returns true if row number and column number
@@ -538,7 +549,8 @@ int main()
     --> INTERMEDIATE = 16 * 16 Cells and 40 Mines
     --> ADVANCED = 24 * 24 Cells and 99 Mines
     */
-    string line, old, twolayer, line2, line3, line4, line5, line6;
+    string old, twolayer;
+    unsigned long long int line, line2, line3, line4, line5, line6;
     int a = 1, temp;
     int level = 1, access, change = 1;
     // cout<<"******** SECURITY SYSTEM ACCESS ********"<<endl;
@@ -556,23 +568,25 @@ int main()
                 ifstream outf; // file opened in read mode
                 outf.open("Password.txt");
                 cin >> old;
+                unsigned long long hash1{Hash(old)};
                 if (outf.is_open())
                 {
                     while (!outf.eof())
                     {
                         outf >> line;
-                        if (old == line)
+                        if (hash1 == line)
                         {
                             cout << "\nYour Data Was Protected By A Second Password, Enter Second Password To Continue \n";
                             ifstream second;
                             second.open("TwoLayer.txt");
                             cin >> twolayer;
+                            unsigned long long hash2{Hash(twolayer)};
                             if (second.is_open())
                             {
                                 while (!second.eof())
                                 {
                                     second >> line2;
-                                    if (twolayer == line2)
+                                    if (hash2 == line2)
                                     {
                                         a = 3;
                                         cout << "***** Access Granted To Change Security Level *****\n";
@@ -645,7 +659,7 @@ int main()
                     }
                 }
             }
-            old.clear(), twolayer.clear(), line.clear(), line2.clear(), line3.clear(), line4.clear(), line5.clear(), line6.clear();
+            old.clear(), twolayer.clear();
         }
         else if (access == 2)
         {
@@ -659,23 +673,25 @@ int main()
                     ifstream outf; // file opened in read mode
                     outf.open("Password.txt");
                     cin >> old;
+                    unsigned long long hash3{Hash(old)};
                     if (outf.is_open())
                     {
                         while (!outf.eof())
                         {
                             outf >> line3;
-                            if (old == line3)
+                            if (hash3 == line3)
                             {
                                 cout << "\nYour Data Was Protected By A Second Password, Enter Second Password To Continue \n";
                                 ifstream second;
                                 second.open("TwoLayer.txt");
                                 cin >> twolayer;
+                                unsigned long long hash4{Hash(twolayer)};
                                 if (second.is_open())
                                 {
                                     while (!second.eof())
                                     {
                                         second >> line4;
-                                        if (twolayer == line4)
+                                        if (hash4 == line4)
                                         {
                                             a = 3;
                                             cout << "**** Access Granted ****" << endl;
@@ -715,12 +731,14 @@ int main()
                                 if (temp != 1)
                                 {
                                     a = temp;
+                                    infi = 0;
+                                    cout << "Session Terminated\n";
                                 }
                             }
                         }
                     }
                 }
-                old.clear(), twolayer.clear(), line.clear(), line2.clear(), line3.clear(), line4.clear(), line5.clear(), line6.clear();
+                old.clear(), twolayer.clear();
             }
             else
             {
@@ -731,23 +749,25 @@ int main()
                     ifstream outf; // file opened in read mode
                     outf.open("Password.txt");
                     cin >> old;
+                    unsigned long long hash5{Hash(old)};
                     if (outf.is_open())
                     {
                         while (!outf.eof())
                         {
                             outf >> line5;
-                            if (old == line5)
+                            if (hash5 == line5)
                             {
                                 cout << "\nYour Data Was Protected By A Second Password, Enter Second Password To Continue \n";
                                 ifstream second;
                                 second.open("TwoLayer.txt");
                                 cin >> twolayer;
+                                unsigned long long hash6{Hash(twolayer)};
                                 if (second.is_open())
                                 {
                                     while (!second.eof())
                                     {
                                         second >> line6;
-                                        if (twolayer == line6)
+                                        if (hash6 == line6)
                                         {
                                             a = 3;
                                             cout << "**** Beginning Last Security Level- THE GAME OF MINES ****" << endl;
@@ -785,7 +805,7 @@ int main()
                     }
                 }
             }
-            old.clear(), twolayer.clear(), line.clear(), line2.clear(), line3.clear(), line4.clear(), line5.clear(), line6.clear();
+            old.clear(), twolayer.clear();
         }
         else
         {
